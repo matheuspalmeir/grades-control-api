@@ -1,0 +1,25 @@
+{
+  "name": "grades-control-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matheuspalmeir/grades-control-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/matheuspalmeir/grades-control-api/issues"
+  },
+  "homepage": "https://github.com/matheuspalmeir/grades-control-api#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
