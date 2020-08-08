@@ -1,13 +1,26 @@
 import { promises as fs } from "fs";
 
 const { readFile, writeFile } = fs;
-
-const gradesDatabase = () => {
-    const file = await readFile('../database/grades.json', 'utf-8');
+const path = "./database/grades.json";
+export const selectGradesData = async () => {
+  try {
+    const file = await readFile(path, "utf-8");
     const parsedFile = JSON.parse(file);
-    console.log("Parsed File:", parsedFile);
-    return parsedFile; 
+    return parsedFile;
+  } catch (error) {
+    console.log("Error:", error);
+  }
 };
 
-export default gradesDatabase; 
+export const saveGradesData = async (gradesData) => {
+  try {
+    console.log("Cheguei na gravação");
 
+    const error = await writeFile(path, JSON.stringify(gradesData), "utf8");
+    if (!error) {
+      return true;
+    }
+  } catch (error) {
+    console.log("Error:", error);
+  }
+};

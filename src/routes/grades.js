@@ -1,6 +1,9 @@
 import express from "express";
+import GradeController from "../controllers/grades.js";
 
 const router = express.Router();
+
+GradeController.init();
 
 router.get("/:id", (req, res) => {
   let response = {};
@@ -70,14 +73,12 @@ router.get("/best/(:quantity)/:subject/:type", (req, res) => {
   res.send(status, response);
 });
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   let response = {};
   const status = 200;
 
   try {
-    response = {
-      message: "Insert Grades",
-    };
+    response = await GradeController.insertGrade(req.body);
   } catch (error) {
     console.log("Error:", error);
     response = error;
