@@ -6,71 +6,46 @@ const router = express.Router();
 GradeController.init();
 
 router.get("/:id", (req, res) => {
-  let response = {};
-  const status = 200;
-
   try {
-    response = {
-      message: "GET Grades",
-    };
+    const response = GradeController.getGrade(parseInt(req.params.id));
+    res.status(200).send(response);
   } catch (error) {
     console.log("Error:", error);
-    response = error;
-    status = 400;
+    res.status(404).send(error.message);
   }
-
-  res.send(status, response);
 });
 
 router.get("/:student/:subject", (req, res) => {
-  let response = {};
-  const status = 200;
-
+  console.log("Params:", req.params);
   try {
-    response = {
-      message: "GET Student Total Grades",
-    };
+    const response = GradeController.getTotalStudentGradeBySubject(req.params);
+    res.status(200).send(response);
   } catch (error) {
     console.log("Error:", error);
-    response = error;
-    status = 400;
+    res.status(404).send(error.message);
   }
-
-  res.send(status, response);
 });
 
 router.get("/avarage/:subject/:type", (req, res) => {
-  let response = {};
-  const status = 200;
-
   try {
-    response = {
-      message: "GET Subject and Type Avarage",
-    };
+    const response = GradeController.getAvarageGradeBySubjectAndType(
+      req.params
+    );
+    res.status(200).send(response);
   } catch (error) {
     console.log("Error:", error);
-    response = error;
-    status = 400;
+    res.status(404).send(error.message);
   }
-
-  res.send(status, response);
 });
 
-router.get("/best/(:quantity)/:subject/:type", (req, res) => {
-  let response = {};
-  const status = 200;
-
+router.get("/best/:subject/:type/:n?", (req, res) => {
   try {
-    response = {
-      message: "GET Three Best Subject and Type ",
-    };
+    const response = GradeController.getTopGradeBySubjectAndType(req.params);
+    res.status(200).send(response);
   } catch (error) {
     console.log("Error:", error);
-    response = error;
-    status = 400;
+    res.status(404).send(error.message);
   }
-
-  res.send(status, response);
 });
 
 router.post("/", async (req, res) => {
@@ -97,21 +72,14 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", (req, res) => {
-  let response = {};
-  const status = 200;
-
+router.delete("/:id", async (req, res) => {
   try {
-    response = {
-      message: "Delete Grades",
-    };
+    const response = await GradeController.deleteGrade(parseInt(req.params.id));
+    res.status(200).send(response);
   } catch (error) {
     console.log("Error:", error);
-    response = error;
-    status = 400;
+    res.status(404).send(error.message);
   }
-
-  res.send(status, response);
 });
 
 export default router;
