@@ -86,8 +86,8 @@ class GradeController {
   };
 
   getTotalStudentGradeBySubject = ({ student, subject }) => {
-    const parsedStudent = student.replace("_", " ");
-    const parsedSubject = subject.replace("_", " ");
+    const parsedStudent = student.replace(/_/g, " ");
+    const parsedSubject = subject.replace(/_/g, " ");
 
     const exists = studentExists(parsedStudent, this.gradesData.grades);
 
@@ -107,8 +107,11 @@ class GradeController {
   };
 
   getAvarageGradeBySubjectAndType = ({ subject, type }) => {
-    const parsedSubject = subject.replace("_", " ");
-    const parsedType = type.replace("_", " ");
+    const parsedSubject = subject.replace(/_/g, " ");
+    const parsedType = type.replace(/_/g, " ");
+
+    console.log("Subject:", parsedSubject);
+    console.log("Type:", parsedType);
 
     const exists = subjectExists(parsedSubject, this.gradesData.grades);
 
@@ -134,8 +137,8 @@ class GradeController {
   };
 
   getTopGradeBySubjectAndType = ({ subject, type, n = 3 }) => {
-    const parsedSubject = subject.replace("_", " ");
-    const parsedType = type.replace("_", " ");
+    const parsedSubject = subject.replace(/_/g, " ");
+    const parsedType = type.replace(/_/g, " ");
 
     const exists = subjectExists(parsedSubject, this.gradesData.grades);
 
