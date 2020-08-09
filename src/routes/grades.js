@@ -74,35 +74,27 @@ router.get("/best/(:quantity)/:subject/:type", (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  let response = {};
-  const status = 200;
-
   try {
-    response = await GradeController.insertGrade(req.body);
+    const response = await GradeController.insertGrade(req.body);
+    res.status(200).send(response);
   } catch (error) {
     console.log("Error:", error);
-    response = error;
-    status = 400;
+    res.status(500).send(error.message);
   }
-
-  res.send(status, response);
 });
 
-router.put("/:id", (req, res) => {
-  let response = {};
-  const status = 200;
-
+router.put("/:id", async (req, res) => {
   try {
-    response = {
-      message: "Update Grades",
-    };
+    const response = await GradeController.updateGrade(
+      parseInt(req.params.id),
+      req.body
+    );
+
+    res.status(200).send(response);
   } catch (error) {
     console.log("Error:", error);
-    response = error;
-    status = 400;
+    res.status(404).send(error.message);
   }
-
-  res.send(status, response);
 });
 
 router.delete("/:id", (req, res) => {

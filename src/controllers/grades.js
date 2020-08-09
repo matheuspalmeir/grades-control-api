@@ -22,14 +22,33 @@ class GradeController {
     const isWrote = await saveGradesData(this.gradesData);
 
     if (!isWrote) {
-      throw new Error("Não foi possível inserir a nota, algo deu errado!");
+      throw new Error(
+        "Was not possible to insert a new grade, something is wrong, try again!"
+      );
     }
 
     return grade;
   };
 
-  updateGrade = (id) => {
-    console.log("Update");
+  updateGrade = async (id, data) => {
+    if (!gradeExists(id, this.gradesData.grades)) {
+      throw new Error(
+        "The recevied grade id does not exist! You can try again with a valid grade id!"
+      );
+    }
+
+    const gradeIndex = findGrade(id, this.gradesData.grades);
+    const oldGrade = this.gradesData.grades[gradeIndex];
+    this.gradesData.grades[gradeIndex] = Object.assign({}, oldGrade, data);
+
+    const isWrote = await saveGradesData(this.gradesData);
+    if (!isWrote) {
+      throw new Error(
+        "Was not possible to insert a new grade, something is wrong, try again!"
+      );
+    }
+
+    return this.gradesData.grades[gradeIndex];
   };
 
   deleteGrade = (id) => {
@@ -55,6 +74,14 @@ class GradeController {
 
 const incrementId = (id) => {
   return id + 1;
+};
+
+const gradeExists = (id, grades) => {
+  return grades.some((grade) => grade.id === id);
+};
+
+const findGrade = (id, grades) => {
+  return grades.findIndex((grade) => grade.id === id);
 };
 
 export default new GradeController();

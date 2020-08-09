@@ -14,8 +14,6 @@ export const selectGradesData = async () => {
 
 export const saveGradesData = async (gradesData) => {
   try {
-    console.log("Cheguei na gravação");
-
     const error = await writeFile(path, JSON.stringify(gradesData), "utf8");
     if (!error) {
       return true;
